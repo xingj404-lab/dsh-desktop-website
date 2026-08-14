@@ -9,7 +9,7 @@
   <link rel="icon" type="image/png" href="assets/icon-128.png" />
   <link rel="apple-touch-icon" href="assets/icon-128.png" />
   <link rel="preload" href="assets/logo.svg" as="image" />
-  <link rel="stylesheet" href="styles.css?v=4" />
+  <link rel="stylesheet" href="styles.css?v=5" />
   <script>
     // 尽早确定语言：在首屏渲染前判断，避免英文用户先看到中文（FOUC）。
     (function () {
@@ -75,7 +75,6 @@
         <a href="#stack" data-i18n="nav_stack">技术栈</a>
         <a href="#download" data-i18n="nav_download">下载</a>
         <a href="#quickstart" data-i18n="nav_quickstart">快速开始</a>
-        <a href="#compare" data-i18n="nav_compare">对比</a>
         <a href="#faq" data-i18n="nav_faq">常见问题</a>
         <a class="nav-gh" href="https://github.com/xingj404-lab/dsh-desktop" target="_blank" rel="noopener">
           GitHub
@@ -428,39 +427,6 @@
       </div>
     </section>
 
-    <!-- Compare -->
-    <section class="section compare" id="compare">
-      <div class="container">
-        <div class="section-head">
-          <p class="eyebrow" data-i18n="eyebrow_compare">对比</p>
-          <h2 data-i18n="compare_title">桌面版 vs Web 版</h2>
-          <p class="section-sub" data-i18n="compare_sub">两者运行完全相同的界面，选择适合你的使用方式。</p>
-        </div>
-
-        <div class="table-wrap">
-          <table class="compare-table">
-            <thead>
-              <tr>
-                <th scope="col"></th>
-                <th scope="col" data-i18n-html="compare_col_web">Web 版 <code>dsh web</code></th>
-                <th scope="col" class="col-highlight" data-i18n-html="compare_col_desktop">桌面版 <code>dsh-desktop</code></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><th scope="row" data-i18n="r1_label">启动方式</th><td data-i18n-html="r1_web">安装 Node + 全局安装 dsh，终端运行 <code>dsh web</code></td><td data-i18n="r1_desktop">下载安装包，双击打开</td></tr>
-              <tr><th scope="row" data-i18n="r2_label">运行位置</th><td data-i18n="r2_web">浏览器标签页</td><td data-i18n="r2_desktop">原生独立窗口</td></tr>
-              <tr><th scope="row" data-i18n="r3_label">需要安装 Node/dsh</th><td data-i18n="r3_web">✅ 是</td><td data-i18n="r3_desktop">❌ 否（已内置）</td></tr>
-              <tr><th scope="row" data-i18n="r4_label">菜单栏 / Dock 图标</th><td>❌</td><td>✅</td></tr>
-              <tr><th scope="row" data-i18n="r5_label">系统托盘与后台运行</th><td>❌</td><td>✅</td></tr>
-              <tr><th scope="row" data-i18n="r6_label">窗口大小 / 位置记忆</th><td>❌</td><td>✅</td></tr>
-              <tr><th scope="row" data-i18n="r7_label">后端自动重启</th><td>❌</td><td>✅</td></tr>
-              <tr><th scope="row" data-i18n="r8_label">底层界面</th><td colspan="2" data-i18n="r8_cell">完全一致</td></tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
-
     <!-- FAQ -->
     <section class="section faq" id="faq">
       <div class="container">
@@ -521,6 +487,6 @@
     </div>
   </footer>
 
-  <script src="app.js?v=3"></script>
+  <script src="app.js?v=4"></script>
 </body>
 </html>
