@@ -73,6 +73,7 @@
       <nav class="site-nav" aria-label="Main navigation">
         <a href="#features" data-i18n="nav_features">特性</a>
         <a href="#download" data-i18n="nav_download">下载</a>
+        <a href="#quickstart" data-i18n="nav_quickstart">快速开始</a>
         <a href="#compare" data-i18n="nav_compare">对比</a>
         <a href="#faq" data-i18n="nav_faq">常见问题</a>
         <a class="nav-gh" href="https://github.com/xingj404-lab/dsh-desktop" target="_blank" rel="noopener">
@@ -225,11 +226,40 @@
           </div>
           <div class="callout-body">
             <h4 data-i18n="callout_title">macOS 安装说明（Gatekeeper）</h4>
-            <p data-i18n-html="callout_p">macOS 版本<strong>未使用 Apple 开发者证书签名</strong>，首次打开可能被 Gatekeeper 拦截。请任选其一：</p>
-            <ol>
-              <li data-i18n-html="callout_li1">右键点击应用 → <strong>打开</strong> → 在弹出的对话框中再次点击 <strong>打开</strong>；或</li>
-              <li data-i18n-html="callout_li2">在「终端」执行：<code>xattr -cr "/Applications/DeepSeek Harness.app"</code></li>
-            </ol>
+            <p data-i18n-html="callout_p">应用<strong>未使用 Apple 开发者证书签名</strong>，macOS 会拦截首次打开。请按下面步骤移除「隔离属性」即可正常使用：</p>
+
+            <div class="callout-steps">
+              <div class="callout-step">
+                <span class="callout-step-num" aria-hidden="true">1</span>
+                <div class="callout-step-body">
+                  <p class="callout-step-title" data-i18n="callout_step1_title">打开「终端」Terminal</p>
+                  <ul>
+                    <li data-i18n-html="callout_step1_a">按 <kbd>⌘ Command</kbd> + <kbd>空格</kbd> 打开「聚焦搜索」，输入 <strong>Terminal</strong> 后按回车；</li>
+                    <li data-i18n="callout_step1_b">或：打开「访达」Finder →「应用程序」→「实用工具」→「终端」。</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="callout-step">
+                <span class="callout-step-num" aria-hidden="true">2</span>
+                <div class="callout-step-body">
+                  <p class="callout-step-title" data-i18n="callout_step2_title">粘贴并运行下面这条命令，然后按回车</p>
+                  <div class="code-wrap">
+                    <pre class="code-block"><code id="gatekeeper-cmd">xattr -cr "/Applications/DeepSeek Harness.app"</code></pre>
+                    <button class="copy-btn" id="copy-gatekeeper" type="button" data-i18n="copy_btn">复制</button>
+                  </div>
+                  <p class="callout-step-note" data-i18n="callout_step2_note">提示：请先确认应用已放入「应用程序」文件夹；若放在其它位置，请把命令里的路径改成实际位置。</p>
+                </div>
+              </div>
+
+              <div class="callout-step">
+                <span class="callout-step-num" aria-hidden="true">3</span>
+                <div class="callout-step-body">
+                  <p class="callout-step-title" data-i18n="callout_step3_title">再次双击「DeepSeek Harness」图标即可正常打开</p>
+                  <p class="callout-step-note" data-i18n="callout_step3_note">命令执行后终端没有任何输出即为成功，无需其它操作。</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -238,6 +268,50 @@
             Linux 用户或需要从源码构建？查看 <a href="https://github.com/xingj404-lab/dsh-desktop#-build-from-source" target="_blank" rel="noopener">构建指南</a>，或前往 <a href="https://github.com/xingj404-lab/dsh-desktop/releases/latest" target="_blank" rel="noopener">GitHub Releases</a> 查看全部安装包。
           </p>
         </div>
+      </div>
+    </section>
+
+    <!-- Getting Started -->
+    <section class="section quickstart" id="quickstart">
+      <div class="container">
+        <div class="section-head">
+          <p class="eyebrow" data-i18n="eyebrow_quickstart">快速开始</p>
+          <h2 data-i18n="quickstart_title">开始使用只需四步</h2>
+          <p class="section-sub" data-i18n="quickstart_sub">下载安装后，还需要一个 DeepSeek API Key 才能调用模型。按下面步骤开通，几分钟即可开始工作。</p>
+        </div>
+
+        <ol class="steps">
+          <li class="step">
+            <span class="step-num" aria-hidden="true">1</span>
+            <div class="step-body">
+              <h3 data-i18n="qs1_title">注册 DeepSeek 账号</h3>
+              <p data-i18n-html="qs1_desc">打开 <a href="https://platform.deepseek.com/" target="_blank" rel="noopener">platform.deepseek.com</a>，用手机号或邮箱注册（也可用 Google / GitHub 登录）。</p>
+            </div>
+          </li>
+          <li class="step">
+            <span class="step-num" aria-hidden="true">2</span>
+            <div class="step-body">
+              <h3 data-i18n="qs2_title">创建 API Key</h3>
+              <p data-i18n-html="qs2_desc">登录后进入 <a href="https://platform.deepseek.com/api_keys" target="_blank" rel="noopener">API Keys</a> 页面，点击「创建 API Key」，复制生成的 <code>sk-</code> 开头的密钥。<strong>密钥只在创建时显示一次，请立即保存好。</strong></p>
+            </div>
+          </li>
+          <li class="step">
+            <span class="step-num" aria-hidden="true">3</span>
+            <div class="step-body">
+              <h3 data-i18n="qs3_title">充值余额</h3>
+              <p data-i18n-html="qs3_desc">进入 <a href="https://platform.deepseek.com/top_up" target="_blank" rel="noopener">充值 / Billing</a> 页面，用支付宝、微信或信用卡充值（按用量计费，需先有余额才能调用 API）。部分用户可能需先完成实名认证。</p>
+            </div>
+          </li>
+          <li class="step">
+            <span class="step-num" aria-hidden="true">4</span>
+            <div class="step-body">
+              <h3 data-i18n="qs4_title">在桌面应用中填入 API Key</h3>
+              <p data-i18n="qs4_desc">打开 DeepSeek Harness 桌面版，进入「模型 / Models」设置页，把 API Key 粘贴进去即可，立即生效、无需重启。</p>
+            </div>
+          </li>
+        </ol>
+
+        <p class="quickstart-foot" data-i18n-html="quickstart_foot">还没有 API Key？<a href="https://platform.deepseek.com/" target="_blank" rel="noopener">前往 DeepSeek 开放平台</a>注册并开通。详细定价请见<a href="https://api-docs.deepseek.com/quick_start/pricing" target="_blank" rel="noopener">官方定价页</a>。</p>
       </div>
     </section>
 

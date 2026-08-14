@@ -27,6 +27,7 @@
       nav_download: "下载",
       nav_compare: "对比",
       nav_faq: "常见问题",
+      nav_quickstart: "快速开始",
       nav_cta: "免费下载",
       nav_open: "打开菜单",
       nav_close: "关闭菜单",
@@ -66,13 +67,39 @@
       win_note: "Windows 10/11 x64 · 标准安装程序",
       callout_title: "macOS 安装说明（Gatekeeper）",
       callout_p:
-        "macOS 版本<strong>未使用 Apple 开发者证书签名</strong>，首次打开可能被 Gatekeeper 拦截。请任选其一：",
-      callout_li1:
-        "右键点击应用 → <strong>打开</strong> → 在弹出的对话框中再次点击 <strong>打开</strong>；或",
-      callout_li2:
-        '在「终端」执行：<code>xattr -cr "/Applications/DeepSeek Harness.app"</code>',
+        "应用<strong>未使用 Apple 开发者证书签名</strong>，macOS 会拦截首次打开。请按下面步骤移除「隔离属性」即可正常使用：",
+      callout_step1_title: "打开「终端」Terminal",
+      callout_step1_a:
+        "按 <kbd>⌘ Command</kbd> + <kbd>空格</kbd> 打开「聚焦搜索」，输入 <strong>Terminal</strong> 后按回车；",
+      callout_step1_b: "或：打开「访达」Finder →「应用程序」→「实用工具」→「终端」。",
+      callout_step2_title: "粘贴并运行下面这条命令，然后按回车",
+      callout_step2_note:
+        "提示：请先确认应用已放入「应用程序」文件夹；若放在其它位置，请把命令里的路径改成实际位置。",
+      callout_step3_title: "再次双击「DeepSeek Harness」图标即可正常打开",
+      callout_step3_note: "命令执行后终端没有任何输出即为成功，无需其它操作。",
+      copy_btn: "复制",
+      copy_done: "已复制 ✓",
       download_foot:
         'Linux 用户或需要从源码构建？查看 <a href="https://github.com/xingj404-lab/dsh-desktop#-build-from-source" target="_blank" rel="noopener">构建指南</a>，或前往 <a href="https://github.com/xingj404-lab/dsh-desktop/releases/latest" target="_blank" rel="noopener">GitHub Releases</a> 查看全部安装包。',
+
+      eyebrow_quickstart: "快速开始",
+      quickstart_title: "开始使用只需四步",
+      quickstart_sub:
+        "下载安装后，还需要一个 DeepSeek API Key 才能调用模型。按下面步骤开通，几分钟即可开始工作。",
+      qs1_title: "注册 DeepSeek 账号",
+      qs1_desc:
+        '打开 <a href="https://platform.deepseek.com/" target="_blank" rel="noopener">platform.deepseek.com</a>，用手机号或邮箱注册（也可用 Google / GitHub 登录）。',
+      qs2_title: "创建 API Key",
+      qs2_desc:
+        '登录后进入 <a href="https://platform.deepseek.com/api_keys" target="_blank" rel="noopener">API Keys</a> 页面，点击「创建 API Key」，复制生成的 <code>sk-</code> 开头的密钥。<strong>密钥只在创建时显示一次，请立即保存好。</strong>',
+      qs3_title: "充值余额",
+      qs3_desc:
+        '进入 <a href="https://platform.deepseek.com/top_up" target="_blank" rel="noopener">充值 / Billing</a> 页面，用支付宝、微信或信用卡充值（按用量计费，需先有余额才能调用 API）。部分用户可能需先完成实名认证。',
+      qs4_title: "在桌面应用中填入 API Key",
+      qs4_desc:
+        "打开 DeepSeek Harness 桌面版，进入「模型 / Models」设置页，把 API Key 粘贴进去即可，立即生效、无需重启。",
+      quickstart_foot:
+        '还没有 API Key？<a href="https://platform.deepseek.com/" target="_blank" rel="noopener">前往 DeepSeek 开放平台</a>注册并开通。详细定价请见<a href="https://api-docs.deepseek.com/quick_start/pricing" target="_blank" rel="noopener">官方定价页</a>。',
 
       eyebrow_features: "特性",
       features_title: "原生、开箱即用的桌面体验",
@@ -121,7 +148,7 @@
       q3: "支持哪些平台？",
       a3: "目前提供 macOS（Apple Silicon）与 Windows（x64）的安装包。Linux 用户可从源码构建，参见构建指南。",
       q4: "macOS 提示「无法验证开发者」怎么办？",
-      a4: '因为应用未使用 Apple 开发者证书签名。右键点击应用 →「打开」，或在终端执行 <code>xattr -cr "/Applications/DeepSeek Harness.app"</code>。',
+      a4: '应用未使用 Apple 开发者证书签名，需要移除隔离属性。打开「终端」（按 ⌘+空格，输入 Terminal 后回车），运行 <code>xattr -cr "/Applications/DeepSeek Harness.app"</code>。详见上方<a href="#macos-note">安装说明</a>。',
       q5: "应用会收集或上传我的数据吗？",
       a5: "不会。后端只绑定本机 127.0.0.1 回环地址，不对外暴露端口，所有数据都留在你的本机。",
       q6: "如何更新到新版本？",
@@ -145,6 +172,7 @@
       nav_download: "Download",
       nav_compare: "Compare",
       nav_faq: "FAQ",
+      nav_quickstart: "Quick start",
       nav_cta: "Download free",
       nav_open: "Open menu",
       nav_close: "Close menu",
@@ -184,13 +212,39 @@
       win_note: "Windows 10/11 x64 · standard installer",
       callout_title: "macOS install note (Gatekeeper)",
       callout_p:
-        "The macOS build is <strong>not signed with an Apple Developer certificate</strong>, so Gatekeeper may block the first launch. Choose either:",
-      callout_li1:
-        "Right-click the app → <strong>Open</strong> → <strong>Open</strong> again in the dialog, or",
-      callout_li2:
-        'In Terminal: <code>xattr -cr "/Applications/DeepSeek Harness.app"</code>',
+        "The app is <strong>not signed with an Apple Developer certificate</strong>, so macOS blocks the first launch. Remove its quarantine flag as follows:",
+      callout_step1_title: "Open Terminal",
+      callout_step1_a:
+        "Press <kbd>⌘ Command</kbd> + <kbd>Space</kbd> for Spotlight, type <strong>Terminal</strong>, and press Enter;",
+      callout_step1_b: "Or: Finder → Applications → Utilities → Terminal.",
+      callout_step2_title: "Paste this command and press Enter",
+      callout_step2_note:
+        "Tip: make sure the app is in your Applications folder; otherwise change the path in the command to its actual location.",
+      callout_step3_title: "Double-click \u201cDeepSeek Harness\u201d again to open it",
+      callout_step3_note: "No output from the command means success — nothing else to do.",
+      copy_btn: "Copy",
+      copy_done: "Copied ✓",
       download_foot:
         'On Linux, or want to build from source? See the <a href="https://github.com/xingj404-lab/dsh-desktop#-build-from-source" target="_blank" rel="noopener">build guide</a> or visit <a href="https://github.com/xingj404-lab/dsh-desktop/releases/latest" target="_blank" rel="noopener">GitHub Releases</a> for all installers.',
+
+      eyebrow_quickstart: "Quick start",
+      quickstart_title: "Get started in four steps",
+      quickstart_sub:
+        "After installing, you need a DeepSeek API key to call the models. Set it up in a few minutes:",
+      qs1_title: "Create a DeepSeek account",
+      qs1_desc:
+        'Open <a href="https://platform.deepseek.com/" target="_blank" rel="noopener">platform.deepseek.com</a> and sign up with a phone number or email (Google / GitHub sign-in also works).',
+      qs2_title: "Create an API key",
+      qs2_desc:
+        'Go to the <a href="https://platform.deepseek.com/api_keys" target="_blank" rel="noopener">API Keys</a> page, click \u201cCreate API key\u201d, and copy the <code>sk-</code> key. <strong>The key is shown only once \u2014 save it right away.</strong>',
+      qs3_title: "Top up your balance",
+      qs3_desc:
+        'Open <a href="https://platform.deepseek.com/top_up" target="_blank" rel="noopener">Billing / Top up</a> and pay with Alipay, WeChat Pay, or a credit card. Usage is pay-as-you-go and requires a balance. Some users may need identity verification first.',
+      qs4_title: "Enter the key in the desktop app",
+      qs4_desc:
+        'Open the DeepSeek Harness desktop app, go to the \u201cModels\u201d settings page, and paste your API key. It takes effect immediately \u2014 no restart needed.',
+      quickstart_foot:
+        'No API key yet? <a href="https://platform.deepseek.com/" target="_blank" rel="noopener">Open the DeepSeek platform</a> to sign up. See the <a href="https://api-docs.deepseek.com/quick_start/pricing" target="_blank" rel="noopener">pricing page</a> for details.',
 
       eyebrow_features: "Features",
       features_title: "A native, zero-setup desktop experience",
@@ -239,7 +293,7 @@
       q3: "Which platforms are supported?",
       a3: "Installers for macOS (Apple Silicon) and Windows (x64). Linux users can build from source — see the build guide.",
       q4: "macOS says \u201ccannot verify the developer\u201d?",
-      a4: 'The app isn\u2019t signed with an Apple certificate. Right-click \u2192 Open, or run <code>xattr -cr "/Applications/DeepSeek Harness.app"</code> in Terminal.',
+      a4: 'The app isn\u2019t signed with an Apple certificate, so remove its quarantine flag. Open Terminal (\u2318+Space \u2192 \u201cTerminal\u201d) and run <code>xattr -cr "/Applications/DeepSeek Harness.app"</code>. See the <a href="#macos-note">install note</a> above.',
       q5: "Does the app collect or upload my data?",
       a5: "No. The backend binds to 127.0.0.1 only, never exposes a port, and all data stays on your machine.",
       q6: "How do I update?",
@@ -502,6 +556,41 @@
         nav.classList.remove("open");
         toggle.setAttribute("aria-expanded", "false");
         toggle.setAttribute("aria-label", t("nav_open"));
+      }
+    });
+  }
+
+  function initCopyButtons() {
+    var btn = document.getElementById("copy-gatekeeper");
+    var cmd = document.getElementById("gatekeeper-cmd");
+    if (!btn || !cmd) return;
+
+    btn.addEventListener("click", function () {
+      var text = cmd.textContent;
+
+      function done() {
+        btn.textContent = t("copy_done");
+        setTimeout(function () {
+          btn.textContent = t("copy_btn");
+        }, 2000);
+      }
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, done);
+      } else {
+        // 兼容回退：选中文本再执行复制
+        try {
+          var range = document.createRange();
+          range.selectNodeContents(cmd);
+          var sel = window.getSelection();
+          sel.removeAllRanges();
+          sel.addRange(range);
+          document.execCommand("copy");
+          sel.removeAllRanges();
+        } catch (e) {
+          /* ignore */
+        }
+        done();
       }
     });
   }
