@@ -407,6 +407,13 @@
     return s == null ? key : s;
   }
 
+  function has(key) {
+    return (
+      T[currentLang] &&
+      Object.prototype.hasOwnProperty.call(T[currentLang], key)
+    );
+  }
+
   function detectLang() {
     if (window.__DSH_INITIAL_LANG__ === "en" || window.__DSH_INITIAL_LANG__ === "zh") {
       return window.__DSH_INITIAL_LANG__;
@@ -588,14 +595,14 @@
 
     document.querySelectorAll("[data-i18n]").forEach(function (el) {
       var key = el.getAttribute("data-i18n");
-      var val = t(key);
-      if (val) el.textContent = val;
+      if (!has(key)) return; // 缺失的 key 保留元素内默认文案，避免把 key 名显示出来
+      el.textContent = t(key);
     });
 
     document.querySelectorAll("[data-i18n-html]").forEach(function (el) {
       var key = el.getAttribute("data-i18n-html");
-      var val = t(key);
-      if (val) el.innerHTML = val;
+      if (!has(key)) return;
+      el.innerHTML = t(key);
     });
 
     var navToggle = document.getElementById("nav-toggle");
