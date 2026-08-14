@@ -653,6 +653,7 @@
     if (year) year.textContent = String(new Date().getFullYear());
 
     initMobileNav();
+    initCopyButtons();
 
     var langToggle = document.getElementById("lang-toggle");
     if (langToggle) {
