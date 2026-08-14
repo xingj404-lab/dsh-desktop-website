@@ -6,9 +6,20 @@
   <title>DeepSeek Harness 桌面版 · dsh-desktop 下载</title>
   <meta name="description" content="DeepSeek Harness (dsh) 编程智能体的原生桌面应用。开箱即用、内置 Node 与 dsh，无需安装任何环境。免费下载 macOS 与 Windows 版本。" />
   <meta name="theme-color" content="#4D6BFE" />
-  <link rel="icon" type="image/png" href="assets/icon-128.png" />
-  <link rel="apple-touch-icon" href="assets/icon-128.png" />
+  <link rel="icon" type="image/png" sizes="128x128" href="assets/icon-128.png" />
+  <link rel="apple-touch-icon" href="assets/icon-512.png" />
   <link rel="preload" href="assets/icon-128.png" as="image" />
+  <!-- 社交分享预览（Open Graph / Twitter Card） -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="DeepSeek Harness" />
+  <meta property="og:title" content="DeepSeek Harness 桌面版 · dsh-desktop 下载" />
+  <meta property="og:description" content="dsh 编程智能体的原生桌面应用。开箱即用、内置 Node 与 dsh，无需安装任何环境。免费下载 macOS 与 Windows 版本。" />
+  <meta property="og:url" content="https://dsh.clawloop.app/" />
+  <meta property="og:image" content="https://dsh.clawloop.app/assets/icon-512.png" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="DeepSeek Harness 桌面版 · dsh-desktop 下载" />
+  <meta name="twitter:description" content="dsh 编程智能体的原生桌面应用。开箱即用、内置 Node 与 dsh，无需安装任何环境。" />
+  <meta name="twitter:image" content="https://dsh.clawloop.app/assets/icon-512.png" />
   <link rel="stylesheet" href="styles.css?v=5" />
   <script>
     // 尽早确定语言：在首屏渲染前判断，避免英文用户先看到中文（FOUC）。
@@ -45,16 +56,16 @@
   </script>
   <script>
     // 兜底数据：在 GitHub API 请求失败或尚未返回时，保证下载按钮立即可用。
-    // 与 dsh-desktop 当前已发布的 v0.1.0 版本一致。
+    // 与 dsh-desktop 当前已发布的 v0.1.3 版本一致。
     window.__DSH_FALLBACK__ = {
-      version: "0.1.0",
-      publishedAt: "2026-08-14T02:34:16Z",
-      base: "https://github.com/xingj404-lab/dsh-desktop/releases/download/v0.1.0",
+      version: "0.1.3",
+      publishedAt: "2026-08-14T16:10:35Z",
+      base: "https://github.com/xingj404-lab/dsh-desktop/releases/download/v0.1.3",
       assets: {
-        dmg:    { file: "DeepSeek.Harness_0.1.0_aarch64.dmg",   size: 97042691 },
-        appzip: { file: "DeepSeek.Harness_0.1.0_arm64.app.zip", size: 114919184 },
-        exe:    { file: "DeepSeek.Harness_0.1.0_x64-setup.exe", size: 53400000 },
-        msi:    { file: "DeepSeek.Harness_0.1.0_x64_en-US.msi", size: 105500000 }
+        dmg:    { file: "DeepSeek.Harness_0.1.3_aarch64.dmg",   size: 105764812 },
+        appzip: { file: "DeepSeek.Harness_0.1.3_arm64.app.zip", size: 123498728 },
+        exe:    { file: "DeepSeek.Harness_0.1.3_x64-setup.exe", size: 58323626 },
+        msi:    { file: "DeepSeek.Harness_0.1.3_x64_en-US.msi", size: 112919463 }
       }
     };
   </script>
@@ -98,7 +109,7 @@
       <div class="container hero-inner">
         <div class="hero-badge" id="version-badge" data-loading="true">
           <span class="pulse-dot" aria-hidden="true"></span>
-          <span id="version-text">最新版本 v0.1.0</span>
+          <span id="version-text">最新版本 v0.1.3</span>
         </div>
 
         <h1 class="hero-title">DeepSeek Harness <span class="hero-title-accent" data-i18n="hero_title_accent">桌面版</span></h1>
