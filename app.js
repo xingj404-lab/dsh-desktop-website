@@ -270,6 +270,9 @@
   }
 
   function detectLang() {
+    if (window.__DSH_INITIAL_LANG__ === "en" || window.__DSH_INITIAL_LANG__ === "zh") {
+      return window.__DSH_INITIAL_LANG__;
+    }
     var param;
     try {
       param = new URLSearchParams(window.location.search).get("lang");
@@ -565,6 +568,7 @@
     currentAssets = buildAssets(null);
     applyAssets(currentAssets);
     applyLang();
+    document.documentElement.classList.remove("lang-pending");
 
     if (!window.fetch) return;
 

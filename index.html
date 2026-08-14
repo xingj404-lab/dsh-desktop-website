@@ -11,6 +11,39 @@
   <link rel="preload" href="assets/logo.svg" as="image" />
   <link rel="stylesheet" href="styles.css" />
   <script>
+    // 尽早确定语言：在首屏渲染前判断，避免英文用户先看到中文（FOUC）。
+    (function () {
+      function initialLang() {
+        var param = null;
+        try {
+          param = new URLSearchParams(window.location.search).get("lang");
+        } catch (e) {}
+        if (param === "zh" || param === "en") return param;
+
+        var stored = null;
+        try {
+          stored = localStorage.getItem("dsh-lang");
+        } catch (e) {}
+        if (stored === "zh" || stored === "en") return stored;
+
+        return (navigator.language || "en").toLowerCase().indexOf("zh") === 0 ? "zh" : "en";
+      }
+
+      var lang = initialLang();
+      window.__DSH_INITIAL_LANG__ = lang;
+      document.documentElement.lang = lang === "zh" ? "zh-CN" : "en";
+
+      // 默认 HTML 是中文；非中文用户先隐藏内容，等 app.js 应用英文后再显示。
+      if (lang !== "zh") {
+        document.documentElement.classList.add("lang-pending");
+        // 兜底：若 app.js 因故未能加载，2.5 秒后强制显示（此时为默认中文），避免白屏。
+        setTimeout(function () {
+          document.documentElement.classList.remove("lang-pending");
+        }, 2500);
+      }
+    })();
+  </script>
+  <script>
     // 兜底数据：在 GitHub API 请求失败或尚未返回时，保证下载按钮立即可用。
     // 与 dsh-desktop 当前已发布的 v0.1.0 版本一致。
     window.__DSH_FALLBACK__ = {

@@ -79,6 +79,11 @@ code {
   padding: 0 24px;
 }
 
+/* 语言尚未应用前隐藏首屏内容，避免非中文用户先看到中文再闪成英文 */
+html.lang-pending body {
+  visibility: hidden;
+}
+
 .skip-link {
   position: absolute;
   left: -9999px;
