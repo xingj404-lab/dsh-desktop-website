@@ -934,6 +934,90 @@ kbd {
   font-size: 15px;
 }
 
+/* ---------- 技术栈 ---------- */
+
+.stack {
+  background: var(--bg-alt);
+}
+
+.stack-layers {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 780px;
+  margin: 0 auto 40px;
+}
+
+.stack-layer {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 22px 26px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.stack-layer:hover {
+  border-color: #d5dcf5;
+  box-shadow: var(--shadow-sm);
+}
+
+.stack-layer-icon {
+  flex: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--blue-soft);
+  color: var(--blue-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stack-layer-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.stack-layer-body h3 {
+  margin: 0 0 6px;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.stack-layer-body p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14.5px;
+}
+
+.stack-layer-tag {
+  flex: none;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--blue-dark);
+  background: var(--blue-soft);
+  border: 1px solid #dfe6ff;
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+
+.stack-table-wrap {
+  margin-top: 8px;
+}
+
+.compare-table.stack-table tbody td.col-tauri {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.compare-table.stack-table tbody td:last-child {
+  color: var(--muted);
+  font-weight: 400;
+}
+
 /* ---------- 对比表 ---------- */
 
 .compare {
@@ -1174,6 +1258,17 @@ kbd {
 
   .section {
     padding: 72px 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .stack-layer {
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+
+  .stack-layer-tag {
+    margin-left: 66px;
   }
 }
 

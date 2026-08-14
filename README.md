@@ -33,7 +33,7 @@ python3 -m http.server 8080
 ## 目录结构
 
 ```
-index.html                 页面结构（Hero / 下载 / 特性 / 对比 / FAQ / 页脚）
+index.html                 页面结构（Hero / 下载 / 特性 / 技术栈 / 对比 / FAQ / 页脚）
 styles.css                 样式（DeepSeek 品牌风格，响应式）
 app.js                     平台检测 + 中英文案 + 最新版本拉取 + 下载地址填充
 assets/                    logo.svg（鲸鱼 Logo）、应用图标
