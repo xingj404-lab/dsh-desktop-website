@@ -552,6 +552,25 @@ code {
   margin: 0;
 }
 
+.download-stat {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 20px;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--blue-dark);
+  background: #fff;
+  border: 1px solid #dfe6ff;
+  border-radius: 999px;
+  box-shadow: var(--shadow-sm);
+}
+
+.download-stat.is-hidden {
+  display: none;
+}
+
 /* ---------- 下载区块 ---------- */
 
 .download {

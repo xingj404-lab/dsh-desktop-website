@@ -50,6 +50,8 @@
       download_title: "选择你的平台开始使用",
       download_sub:
         "安装包已内置 Node.js 运行时与 dsh CLI，最终用户无需安装 Node、npm 或任何命令行工具。",
+      dl_total: "累计下载 {n} 次",
+      dl_count: "{n} 次下载",
       mac_name: "macOS",
       mac_arch: "Apple Silicon · M1 / M2 / M3 / M4",
       win_name: "Windows",
@@ -166,6 +168,8 @@
       download_title: "Choose your platform",
       download_sub:
         "Installers bundle the Node.js runtime and the dsh CLI — end users don't need Node, npm, or any command-line tools.",
+      dl_total: "{n} total downloads",
+      dl_count: "{n} downloads",
       mac_name: "macOS",
       mac_arch: "Apple Silicon · M1 / M2 / M3 / M4",
       win_name: "Windows",
@@ -256,6 +260,7 @@
   var currentOs = detectOS();
   var currentAssets = null;
   var latestVersion = fallback ? fallback.version : "";
+  var totalDownloads = null;
 
   /* ============================ 工具 ============================ */
 
@@ -305,12 +310,23 @@
     return (mb >= 100 ? Math.round(mb) : mb.toFixed(1)) + " MB";
   }
 
+  function formatCount(n) {
+    if (typeof n !== "number" || !isFinite(n) || n < 0) return "0";
+    return n.toLocaleString();
+  }
+
+  function fill(str, obj) {
+    return String(str).replace(/\{(\w+)\}/g, function (_, k) {
+      return obj && obj[k] != null ? obj[k] : "";
+    });
+  }
+
   /* ============================ 下载数据 ============================ */
 
   function buildAssets(release) {
     var out = {};
     Object.keys(ASSET_SUFFIX).forEach(function (key) {
-      out[key] = { url: "", size: null, sizeText: "" };
+      out[key] = { url: "", size: null, sizeText: "", count: null };
     });
 
     if (release && Array.isArray(release.assets)) {
@@ -321,7 +337,8 @@
             out[key] = {
               url: asset.browser_download_url || "",
               size: asset.size,
-              sizeText: formatSize(asset.size)
+              sizeText: formatSize(asset.size),
+              count: asset.download_count
             };
           }
         });
@@ -334,13 +351,21 @@
           out[key] = {
             url: fallback.base + "/" + fallback.assets[key].file,
             size: fallback.assets[key].size,
-            sizeText: formatSize(fallback.assets[key].size)
+            sizeText: formatSize(fallback.assets[key].size),
+            count: null
           };
         }
       });
     }
 
     return out;
+  }
+
+  function btnSizeText(asset) {
+    var parts = [];
+    if (asset.sizeText) parts.push(asset.sizeText);
+    if (asset.count != null) parts.push(fill(t("dl_count"), { n: formatCount(asset.count) }));
+    return parts.join(" · ");
   }
 
   function applyAssets(assets) {
@@ -350,15 +375,15 @@
       var asset = assets[key];
       if (!asset || !asset.url) return;
       a.href = asset.url;
-      var sizeEl = a.querySelector("[data-size]");
-      if (sizeEl && asset.sizeText) sizeEl.textContent = asset.sizeText;
     });
 
     var sizeEls = document.querySelectorAll("[data-size]");
     sizeEls.forEach(function (el) {
       var key = el.getAttribute("data-size");
       var asset = assets[key];
-      if (asset && asset.sizeText) el.textContent = asset.sizeText;
+      if (!asset) return;
+      var txt = btnSizeText(asset);
+      if (txt) el.textContent = txt;
     });
   }
 
@@ -396,6 +421,17 @@
     }
   }
 
+  function renderDownloadStat() {
+    var el = document.getElementById("download-stat");
+    if (!el) return;
+    if (totalDownloads == null) {
+      el.classList.add("is-hidden");
+      return;
+    }
+    el.textContent = fill(t("dl_total"), { n: formatCount(totalDownloads) });
+    el.classList.remove("is-hidden");
+  }
+
   function updateLangToggle() {
     var btn = document.getElementById("lang-toggle");
     if (!btn) return;
@@ -429,6 +465,8 @@
 
     updateVersionText();
     updateHero();
+    if (currentAssets) applyAssets(currentAssets);
+    renderDownloadStat();
     updateLangToggle();
   }
 
@@ -463,6 +501,49 @@
         toggle.setAttribute("aria-label", t("nav_open"));
       }
     });
+  }
+
+  function parseNextLink(header) {
+    if (!header) return null;
+    var m = header.match(/<([^>]+)>\s*;\s*rel="next"/);
+    return m ? m[1] : null;
+  }
+
+  // 仅统计「安装包」下载，排除 latest.json / 更新器 .tar.gz 等非用户下载资产。
+  function isInstallerAsset(name) {
+    if (!name) return false;
+    return Object.keys(ASSET_SUFFIX).some(function (key) {
+      return name.indexOf(ASSET_SUFFIX[key]) !== -1;
+    });
+  }
+
+  function fetchTotalDownloads(url) {
+    url =
+      url ||
+      "https://api.github.com/repos/xingj404-lab/dsh-desktop/releases?per_page=100";
+
+    return fetch(url, { headers: { Accept: "application/vnd.github+json" } }).then(
+      function (res) {
+        if (!res.ok) throw new Error("HTTP " + res.status);
+        var next = parseNextLink(res.headers.get("Link"));
+        return res.json().then(function (list) {
+          var total = 0;
+          (list || []).forEach(function (r) {
+            (r.assets || []).forEach(function (a) {
+              if (typeof a.download_count === "number" && isInstallerAsset(a.name)) {
+                total += a.download_count;
+              }
+            });
+          });
+          if (next) {
+            return fetchTotalDownloads(next).then(function (rest) {
+              return total + rest;
+            });
+          }
+          return total;
+        });
+      }
+    );
   }
 
   /* ============================ 主流程 ============================ */
@@ -502,6 +583,15 @@
       })
       .catch(function () {
         /* 保持兜底数据，不打断用户 */
+      });
+
+    fetchTotalDownloads()
+      .then(function (total) {
+        totalDownloads = total;
+        renderDownloadStat();
+      })
+      .catch(function () {
+        /* 拉取失败则隐藏累计下载量 */
       });
   }
 
