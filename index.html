@@ -9,7 +9,7 @@
   <link rel="icon" type="image/png" href="assets/icon-128.png" />
   <link rel="apple-touch-icon" href="assets/icon-128.png" />
   <link rel="preload" href="assets/logo.svg" as="image" />
-  <link rel="stylesheet" href="styles.css?v=2" />
+  <link rel="stylesheet" href="styles.css?v=3" />
   <script>
     // 尽早确定语言：在首屏渲染前判断，避免英文用户先看到中文（FOUC）。
     (function () {
@@ -378,77 +378,52 @@
     <section class="section stack" id="stack">
       <div class="container">
         <div class="section-head">
-          <p class="eyebrow" data-i18n="eyebrow_stack">技术栈</p>
-          <h2 data-i18n="stack_title">更轻、更快 —— 我们选择 Tauri，而非 Electron</h2>
+          <p class="eyebrow" data-i18n="eyebrow_stack">架构优势</p>
+          <h2 data-i18n="stack_title">更轻、更快，没有 Electron 的臃肿</h2>
           <p class="section-sub" data-i18n-html="stack_sub">
-            市面上很多桌面 AI 助手都基于 Electron 打包。dsh-desktop 改用 <strong>Tauri v2</strong>（Rust）与<strong>系统原生 WebView</strong> 构建，体积更小、占用更低、启动更快。
+            很多桌面 AI 工具用 Electron 打包，等于每个应用都内置一整个浏览器，又大又慢。DeepSeek Harness 桌面版改用更轻量的原生技术，把省下的性能都留给你。
           </p>
         </div>
 
-        <div class="stack-layers">
-          <div class="stack-layer">
-            <div class="stack-layer-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="m7 6 .5 1M11 6l.5 1"/></svg>
+        <div class="stack-benefits">
+          <div class="feature-card">
+            <div class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z"/></svg>
             </div>
-            <div class="stack-layer-body">
-              <h3 data-i18n="layer1_title">系统原生 WebView</h3>
-              <p data-i18n="layer1_desc">macOS 使用 WKWebView、Windows 使用 WebView2 —— 由操作系统提供并持续更新安全补丁，无需为每个应用打包一份 Chromium。</p>
-            </div>
-            <span class="stack-layer-tag" data-i18n="layer1_tag">零额外体积</span>
+            <h3 data-i18n="b1_title">启动更快</h3>
+            <p data-i18n="b1_desc">双击秒开，无需等待臃肿的浏览器内核加载。</p>
           </div>
 
-          <div class="stack-layer">
-            <div class="stack-layer-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 9 5-9 5-9-5 9-5Z"/><path d="m3 12 9 5 9-5"/><path d="m3 17 9 5 9-5"/></svg>
+          <div class="feature-card">
+            <div class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3v3a2 2 0 0 1-2 2H3"/><path d="M21 8h-3a2 2 0 0 1-2-2V3"/><path d="M3 16h3a2 2 0 0 1 2 2v3"/><path d="M16 21v-3a2 2 0 0 1 2-2h3"/></svg>
             </div>
-            <div class="stack-layer-body">
-              <h3 data-i18n="layer2_title">Tauri v2（Rust）</h3>
-              <p data-i18n="layer2_desc">原生窗口、菜单栏、系统托盘、自动更新等能力，全部由体积仅约 8 MB 的 Rust 内核驱动。</p>
-            </div>
-            <span class="stack-layer-tag" data-i18n="layer2_tag">内存安全</span>
+            <h3 data-i18n="b2_title">体积更小</h3>
+            <p data-i18n="b2_desc">安装包更小、下载更快，不占用大量磁盘空间。</p>
           </div>
 
-          <div class="stack-layer">
-            <div class="stack-layer-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="14" height="14" rx="2"/><rect x="9" y="9" width="6" height="6"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"/></svg>
+          <div class="feature-card">
+            <div class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
             </div>
-            <div class="stack-layer-body">
-              <h3 data-i18n="layer3_title">Node.js 运行时（内置）</h3>
-              <p data-i18n="layer3_desc">随安装包内置 Node.js v22，用于运行 dsh —— 你无需自行安装 Node、npm 或任何命令行工具。</p>
-            </div>
-            <span class="stack-layer-tag" data-i18n="layer3_tag">开箱即用</span>
+            <h3 data-i18n="b3_title">内存更省</h3>
+            <p data-i18n="b3_desc">不额外吃内存，和编辑器、浏览器一起开也不卡。</p>
           </div>
 
-          <div class="stack-layer">
-            <div class="stack-layer-icon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m4 17 6-6-6-6"/><path d="M12 19h8"/></svg>
+          <div class="feature-card">
+            <div class="feature-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 5 6v5c0 4.5 3 8 7 10 4-2 7-5.5 7-10V6l-7-3Z"/><path d="m9 12 2 2 4-4"/></svg>
             </div>
-            <div class="stack-layer-body">
-              <h3 data-i18n="layer4_title">dsh（DeepSeek Harness）</h3>
-              <p data-i18n="layer4_desc">编程智能体核心，负责模型调用、代码执行与任务编排，运行在你本机的 127.0.0.1 回环地址上。</p>
-            </div>
-            <span class="stack-layer-tag" data-i18n="layer4_tag">本地优先</span>
+            <h3 data-i18n="b4_title">更安全</h3>
+            <p data-i18n="b4_desc">底层技术更安全，数据始终留在你的电脑上。</p>
           </div>
         </div>
 
-        <div class="table-wrap stack-table-wrap">
-          <table class="compare-table stack-table">
-            <thead>
-              <tr>
-                <th scope="col"></th>
-                <th scope="col" class="col-highlight" data-i18n-html="stack_col_tauri">Tauri v2 <code>dsh-desktop</code></th>
-                <th scope="col" data-i18n="stack_col_electron">Electron</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><th scope="row" data-i18n="s1_label">渲染引擎</th><td class="col-tauri" data-i18n="s1_tauri">系统原生 WebView（WebKit / WebView2）</td><td data-i18n="s1_electron">每个应用打包一份 Chromium</td></tr>
-              <tr><th scope="row" data-i18n="s2_label">框架体积</th><td class="col-tauri" data-i18n="s2_tauri">Rust 内核约 8 MB</td><td data-i18n="s2_electron">Chromium 约 100–150 MB</td></tr>
-              <tr><th scope="row" data-i18n="s3_label">内存占用</th><td class="col-tauri" data-i18n="s3_tauri">复用系统 WebView，更低</td><td data-i18n="s3_electron">独立 Chromium 多进程，更高</td></tr>
-              <tr><th scope="row" data-i18n="s4_label">启动速度</th><td class="col-tauri" data-i18n="s4_tauri">无浏览器冷启动，更快</td><td data-i18n="s4_electron">需加载 Chromium，较慢</td></tr>
-              <tr><th scope="row" data-i18n="s5_label">后端语言</th><td class="col-tauri" data-i18n="s5_tauri">Rust（内存安全、高性能）</td><td data-i18n="s5_electron">JavaScript / Node.js</td></tr>
-              <tr><th scope="row" data-i18n="s6_label">安全补丁</th><td class="col-tauri" data-i18n="s6_tauri">WebView 补丁由操作系统推送</td><td data-i18n="s6_electron">依赖应用自行升级 Chromium</td></tr>
-            </tbody>
-          </table>
+        <div class="stack-note">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6"/></svg>
+          <p data-i18n-html="stack_note">
+            同样是桌面应用，Electron 会给每个应用塞进一整个浏览器；我们改用更轻的 <strong>Tauri</strong> 技术 —— 更小、更快、更省内存，同时保留了原生窗口、系统托盘与自动更新。
+          </p>
         </div>
       </div>
     </section>
@@ -542,6 +517,6 @@
     </div>
   </footer>
 
-  <script src="app.js?v=2"></script>
+  <script src="app.js?v=3"></script>
 </body>
 </html>
