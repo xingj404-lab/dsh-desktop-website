@@ -1144,6 +1144,12 @@ kbd {
   color: #fff;
 }
 
+.footer-links .footer-x {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
 .footer-copy {
   margin: 8px 0 0;
   font-size: 13px;
