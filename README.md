@@ -36,7 +36,7 @@ python3 -m http.server 8080
 index.html                 页面结构（Hero / 下载 / 特性 / 技术栈 / FAQ / 页脚）
 styles.css                 样式（DeepSeek 品牌风格，响应式）
 app.js                     平台检测 + 中英文案 + 最新版本拉取 + 下载地址填充
-assets/                    logo.svg（鲸鱼 Logo）、应用图标
+assets/                    应用图标（icon-128/512.png、icon.png）
 .github/workflows/pages.yml  GitHub Pages 自动部署工作流
 ```
 
