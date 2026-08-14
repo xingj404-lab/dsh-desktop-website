@@ -560,9 +560,10 @@
     var cmd = document.getElementById("gatekeeper-cmd");
     if (!btn || !cmd) return;
 
-    btn.addEventListener("click", function () {
-      var text = cmd.textContent;
+    // 只复制命令本身：去掉首尾空白，避免误复制到标题等相邻文本
+    var text = (cmd.textContent || "").trim();
 
+    btn.addEventListener("click", function () {
       function done() {
         btn.textContent = t("copy_done");
         setTimeout(function () {
@@ -570,21 +571,33 @@
         }, 2000);
       }
 
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(done, done);
-      } else {
-        // 兼容回退：选中文本再执行复制
+      // 回退方案：用隐藏 textarea 精确复制指定文本，而非依赖当前页面选区
+      function legacyCopy() {
+        var ta = document.createElement("textarea");
+        ta.value = text;
+        ta.setAttribute("readonly", "");
+        ta.style.position = "fixed";
+        ta.style.top = "0";
+        ta.style.left = "-9999px";
+        document.body.appendChild(ta);
+        ta.select();
+        ta.setSelectionRange(0, ta.value.length);
         try {
-          var range = document.createRange();
-          range.selectNodeContents(cmd);
-          var sel = window.getSelection();
-          sel.removeAllRanges();
-          sel.addRange(range);
           document.execCommand("copy");
-          sel.removeAllRanges();
         } catch (e) {
           /* ignore */
         }
+        document.body.removeChild(ta);
+      }
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done, function () {
+          // 剪贴板 API 失败时回退到 execCommand
+          legacyCopy();
+          done();
+        });
+      } else {
+        legacyCopy();
         done();
       }
     });
