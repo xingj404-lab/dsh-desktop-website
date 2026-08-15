@@ -609,7 +609,8 @@
     return m ? m[1] : null;
   }
 
-  // 仅统计「安装包」下载，排除 latest.json / 更新器 .tar.gz 等非用户下载资产。
+  // 仅统计「安装包」下载，排除 latest.json 与 *_aarch64.app.tar.gz（Tauri 自动更新器
+  // 专用制品，非用户手动下载项）等非用户下载资产。
   function isInstallerAsset(name) {
     if (!name) return false;
     return Object.keys(ASSET_SUFFIX).some(function (key) {
