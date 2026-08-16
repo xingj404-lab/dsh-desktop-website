@@ -62,7 +62,6 @@
       dl_total: "累计下载 {n} 次",
       views_total: "累计访问 {n} 次",
       views_and_downloads: "累计访问 {views} 次 · 累计下载 {downloads} 次",
-      dl_count: "{n} 次下载",
       mac_name: "macOS",
       mac_arch: "Apple Silicon · M1 / M2 / M3 / M4",
       win_name: "Windows",
@@ -211,7 +210,6 @@
       dl_total: "{n} total downloads",
       views_total: "{n} total visits",
       views_and_downloads: "{views} total visits · {downloads} total downloads",
-      dl_count: "{n} downloads",
       mac_name: "macOS",
       mac_arch: "Apple Silicon · M1 / M2 / M3 / M4",
       win_name: "Windows",
@@ -508,10 +506,7 @@
   }
 
   function btnSizeText(asset) {
-    var parts = [];
-    if (asset.sizeText) parts.push(asset.sizeText);
-    if (asset.count != null) parts.push(fill(t("dl_count"), { n: formatCount(asset.count) }));
-    return parts.join(" · ");
+    return asset.sizeText || "";
   }
 
   function applyAssets(assets) {
