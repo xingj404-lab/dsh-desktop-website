@@ -58,17 +58,30 @@
     })();
   </script>
   <script>
+    // 下载源与统计配置。
+    // 完成 GoatCounter 注册后填写 goatCounterCode；最新版由 OSS latest.json 自动获取。
+    window.__DSH_DOWNLOAD_CONFIG__ = {
+      ossBase: "https://deepseek-harness-desktop.oss-cn-hongkong.aliyuncs.com",
+      goatCounterCode: "",
+      githubBaseline: {
+        dmg: 64,
+        appzip: 15,
+        exe: 169,
+        msi: 15
+      }
+    };
+
     // 兜底数据：在 GitHub API 请求失败或尚未返回时，保证下载按钮立即可用。
-    // 与 dsh-desktop 当前已发布的 v0.1.6 版本一致。
+    // 与 OSS 当前已发布的 v0.1.7 版本一致。
     window.__DSH_FALLBACK__ = {
-      version: "0.1.6",
-      publishedAt: "2026-08-15T12:16:05Z",
-      base: "https://github.com/xingj404-lab/dsh-desktop/releases/download/v0.1.6",
+      version: "0.1.7",
+      publishedAt: "2026-08-16T04:07:13Z",
+      base: "https://github.com/xingj404-lab/dsh-desktop/releases/download/v0.1.7",
       assets: {
-        dmg:    { file: "DeepSeek.Harness_0.1.6_aarch64.dmg",   size: 105742719 },
-        appzip: { file: "DeepSeek.Harness_0.1.6_arm64.app.zip", size: 123494151 },
-        exe:    { file: "DeepSeek.Harness_0.1.6_x64-setup.exe", size: 58314026 },
-        msi:    { file: "DeepSeek.Harness_0.1.6_x64_en-US.msi", size: 112948135 }
+        dmg:    { file: "DeepSeek.Harness_0.1.7_aarch64.dmg",   size: 105749973 },
+        appzip: { file: "DeepSeek.Harness_0.1.7_arm64.app.zip", size: 123510554 },
+        exe:    { file: "DeepSeek.Harness_0.1.7_x64-setup.exe", size: 58319080 },
+        msi:    { file: "DeepSeek.Harness_0.1.7_x64_en-US.msi", size: 112911819 }
       }
     };
   </script>

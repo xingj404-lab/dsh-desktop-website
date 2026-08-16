@@ -13,6 +13,14 @@
     "https://api.github.com/repos/xingj404-lab/dsh-desktop/releases/latest";
 
   var fallback = window.__DSH_FALLBACK__ || null;
+  var downloadConfig = window.__DSH_DOWNLOAD_CONFIG__ || {};
+  var ossBase = String(downloadConfig.ossBase || "").replace(/\/+$/, "");
+  var ossLatestUrl = ossBase ? ossBase + "/latest.json" : "";
+  var goatCounterCode = String(downloadConfig.goatCounterCode || "").trim();
+  var goatCounterBaseUrl = goatCounterCode
+    ? "https://" + goatCounterCode + ".goatcounter.com"
+    : "";
+  var githubBaseline = downloadConfig.githubBaseline || {};
 
   /* ============================ 文案（中英） ============================ */
 
@@ -375,6 +383,60 @@
 
   /* ============================ 下载数据 ============================ */
 
+  function configuredAssetUrl(version, file, githubUrl) {
+    if (!ossBase || !version || !file) return githubUrl || "";
+    return ossBase + "/" + String(version).replace(/^v/, "") + "/" + encodeURIComponent(file);
+  }
+
+  function downloadEventName(key) {
+    return "download-" + key;
+  }
+
+  function releaseFromOssManifest(manifest) {
+    var version = manifest && String(manifest.version || "").replace(/^v/, "");
+    if (!version) throw new Error("OSS latest.json is missing version");
+
+    return {
+      tag_name: "v" + version,
+      assets: Object.keys(ASSET_SUFFIX).map(function (key) {
+        var file = "DeepSeek.Harness_" + version + ASSET_SUFFIX[key];
+        var fallbackAsset =
+          fallback && fallback.version === version && fallback.assets
+            ? fallback.assets[key]
+            : null;
+        return {
+          name: file,
+          browser_download_url: configuredAssetUrl(version, file, ""),
+          size: fallbackAsset ? fallbackAsset.size : null,
+          download_count: null
+        };
+      })
+    };
+  }
+
+  function fetchLatestRelease() {
+    var ossRequest = ossLatestUrl
+      ? fetch(ossLatestUrl, { cache: "no-store" })
+          .then(function (res) {
+            if (!res.ok) throw new Error("HTTP " + res.status);
+            return res.json();
+          })
+          .then(releaseFromOssManifest)
+      : Promise.reject(new Error("OSS latest.json is not configured"));
+
+    return ossRequest.catch(function () {
+      return fetch(API_URL, { headers: { Accept: "application/vnd.github+json" } }).then(
+        function (res) {
+          if (!res.ok) throw new Error("HTTP " + res.status);
+          return res.json().then(function (release) {
+            release.__downloadSource = "github";
+            return release;
+          });
+        }
+      );
+    });
+  }
+
   function buildAssets(release) {
     var out = {};
     Object.keys(ASSET_SUFFIX).forEach(function (key) {
@@ -387,7 +449,14 @@
         Object.keys(ASSET_SUFFIX).forEach(function (key) {
           if (name.indexOf(ASSET_SUFFIX[key]) !== -1) {
             out[key] = {
-              url: asset.browser_download_url || "",
+              url:
+                release.__downloadSource === "github"
+                  ? asset.browser_download_url || ""
+                  : configuredAssetUrl(
+                      release.tag_name,
+                      name,
+                      asset.browser_download_url || ""
+                    ),
               size: asset.size,
               sizeText: formatSize(asset.size),
               count: asset.download_count
@@ -401,7 +470,11 @@
       Object.keys(out).forEach(function (key) {
         if (!out[key].url && fallback.assets[key]) {
           out[key] = {
-            url: fallback.base + "/" + fallback.assets[key].file,
+            url: configuredAssetUrl(
+              fallback.version,
+              fallback.assets[key].file,
+              fallback.base + "/" + fallback.assets[key].file
+            ),
             size: fallback.assets[key].size,
             sizeText: formatSize(fallback.assets[key].size),
             count: null
@@ -427,6 +500,7 @@
       var asset = assets[key];
       if (!asset || !asset.url) return;
       a.href = asset.url;
+      if (goatCounterCode) a.setAttribute("data-download-event", downloadEventName(key));
     });
 
     var sizeEls = document.querySelectorAll("[data-size]");
@@ -464,6 +538,9 @@
 
     if (cfg && asset && asset.url) {
       btn.href = asset.url;
+      if (goatCounterCode) {
+        btn.setAttribute("data-download-event", downloadEventName(cfg.key));
+      }
       label.textContent = cfg.label;
       if (hint) hint.textContent = cfg.hint;
     } else {
@@ -647,6 +724,87 @@
     );
   }
 
+  function sendGoatEvent(path, title) {
+    var endpoint = goatCounterBaseUrl + "/count";
+    var query =
+      "?p=" +
+      encodeURIComponent(path) +
+      "&t=" +
+      encodeURIComponent(title) +
+      "&e=1&rnd=" +
+      Math.random().toString(36).slice(2, 7);
+    var url = endpoint + query;
+
+    if (!navigator.sendBeacon || !navigator.sendBeacon(url)) {
+      var image = document.createElement("img");
+      image.src = url;
+      image.style.position = "absolute";
+      image.style.width = "1px";
+      image.style.height = "1px";
+      image.style.bottom = "0";
+      image.loading = "eager";
+      image.alt = "";
+      image.setAttribute("aria-hidden", "true");
+      image.addEventListener("load", function () {
+        if (image.parentNode) image.parentNode.removeChild(image);
+      });
+      document.body.appendChild(image);
+    }
+  }
+
+  function initDownloadTracking() {
+    if (!goatCounterCode) return;
+    document.addEventListener("click", function (event) {
+      var target = event.target;
+      var link = target && target.closest ? target.closest("[data-download-event]") : null;
+      if (!link) return;
+      sendGoatEvent(
+        link.getAttribute("data-download-event"),
+        (link.textContent || "Download").trim()
+      );
+    });
+  }
+
+  function parsePublicCount(value) {
+    var n = Number(String(value == null ? "0" : value).replace(/[^0-9.-]/g, ""));
+    return isFinite(n) && n >= 0 ? n : 0;
+  }
+
+  function fetchGoatCount(key) {
+    var eventName = downloadEventName(key);
+    var url =
+      goatCounterBaseUrl + "/counter/" + encodeURIComponent(eventName) + ".json";
+
+    return fetch(url).then(function (res) {
+      if (!res.ok) {
+        // 尚未产生过该事件时 GoatCounter 返回 404，按 0 次处理。
+        if (res.status === 404) return 0;
+        throw new Error("HTTP " + res.status);
+      }
+      return res.json().then(function (data) {
+        return parsePublicCount(data && data.count);
+      });
+    });
+  }
+
+  function fetchTrackedDownloads() {
+    var keys = Object.keys(ASSET_SUFFIX);
+    return Promise.all(
+      keys.map(function (key) {
+        return fetchGoatCount(key);
+      })
+    ).then(function (counts) {
+      var total = 0;
+      keys.forEach(function (key, index) {
+        var count = parsePublicCount(githubBaseline[key]) + counts[index];
+        total += count;
+        if (currentAssets && currentAssets[key]) currentAssets[key].count = count;
+      });
+      applyAssets(currentAssets);
+      return total;
+    });
+  }
+
   /* ============================ 主流程 ============================ */
 
   function init() {
@@ -655,6 +813,7 @@
 
     initMobileNav();
     initCopyButtons();
+    initDownloadTracking();
 
     var langToggle = document.getElementById("lang-toggle");
     if (langToggle) {
@@ -671,11 +830,7 @@
 
     if (!window.fetch) return;
 
-    fetch(API_URL, { headers: { Accept: "application/vnd.github+json" } })
-      .then(function (res) {
-        if (!res.ok) throw new Error("HTTP " + res.status);
-        return res.json();
-      })
+    var latestReleaseRequest = fetchLatestRelease()
       .then(function (release) {
         if (release && release.tag_name) {
           latestVersion = release.tag_name.replace(/^v/, "");
@@ -688,14 +843,16 @@
         /* 保持兜底数据，不打断用户 */
       });
 
-    fetchTotalDownloads()
-      .then(function (total) {
-        totalDownloads = total;
-        renderDownloadStat();
-      })
-      .catch(function () {
-        /* 拉取失败则隐藏累计下载量 */
-      });
+    latestReleaseRequest.then(function () {
+      (goatCounterCode ? fetchTrackedDownloads() : fetchTotalDownloads())
+        .then(function (total) {
+          totalDownloads = total;
+          renderDownloadStat();
+        })
+        .catch(function () {
+          /* 拉取失败则隐藏累计下载量 */
+        });
+    });
   }
 
   if (document.readyState === "loading") {
