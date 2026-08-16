@@ -534,6 +534,29 @@
     });
   }
 
+  function fetchAssetSize(asset) {
+    if (!asset || !asset.url || asset.size != null) return Promise.resolve();
+    return fetch(asset.url, { method: "HEAD", cache: "no-store" }).then(function (res) {
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      var size = Number(res.headers.get("Content-Length"));
+      if (!isFinite(size) || size <= 0) throw new Error("Missing Content-Length");
+      asset.size = size;
+      asset.sizeText = formatSize(size);
+    });
+  }
+
+  function hydrateAssetSizes(assets) {
+    return Promise.all(
+      Object.keys(assets || {}).map(function (key) {
+        return fetchAssetSize(assets[key]).catch(function () {
+          /* 单个文件大小读取失败时保留下载按钮，只隐藏该大小 */
+        });
+      })
+    ).then(function () {
+      return assets;
+    });
+  }
+
   /* ============================ 渲染 ============================ */
 
   function updateVersionText() {
@@ -923,6 +946,9 @@
         currentAssets = buildAssets(release);
         applyAssets(currentAssets);
         applyLang();
+        return hydrateAssetSizes(currentAssets).then(function () {
+          applyAssets(currentAssets);
+        });
       })
       .catch(function () {
         /* 保持兜底数据，不打断用户 */

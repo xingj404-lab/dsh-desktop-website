@@ -50,6 +50,8 @@ assets/                    应用图标（icon-128/512.png、icon.png）
 `{ossBase}/latest.json` 获取当前版本号（请求禁用缓存），并按
 `{ossBase}/{version}/{file}` 拼接四种手动安装包地址；OSS 请求失败时回退到
 GitHub Releases API，内嵌兜底数据则保证两个 API 都不可用时按钮仍有可用地址。
+当 `latest.json` 没有提供手动安装包大小时，页面会并行发送 OSS `HEAD` 请求读取
+`Content-Length`；这只读取响应头，不会下载安装包内容。
 
 下载统计可选用 GoatCounter。注册账号后填写 `goatCounterCode`，并在 GoatCounter
 设置中开启 “Allow adding visitor counts on your website”。页面会统计四类安装包的
