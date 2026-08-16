@@ -59,6 +59,8 @@
       download_sub:
         "安装包已内置 Node.js 运行时与 dsh CLI，最终用户无需安装 Node、npm 或任何命令行工具。",
       dl_total: "累计下载 {n} 次",
+      views_total: "累计访问 {n} 次",
+      views_and_downloads: "累计访问 {views} 次 · 累计下载 {downloads} 次",
       dl_count: "{n} 次下载",
       mac_name: "macOS",
       mac_arch: "Apple Silicon · M1 / M2 / M3 / M4",
@@ -198,6 +200,8 @@
       download_sub:
         "Installers bundle the Node.js runtime and the dsh CLI — end users don't need Node, npm, or any command-line tools.",
       dl_total: "{n} total downloads",
+      views_total: "{n} total visits",
+      views_and_downloads: "{views} total visits · {downloads} total downloads",
       dl_count: "{n} downloads",
       mac_name: "macOS",
       mac_arch: "Apple Silicon · M1 / M2 / M3 / M4",
@@ -311,6 +315,7 @@
   var currentAssets = null;
   var latestVersion = fallback ? fallback.version : "";
   var totalDownloads = null;
+  var totalPageViews = null;
 
   /* ============================ 工具 ============================ */
 
@@ -553,11 +558,20 @@
   function renderDownloadStat() {
     var el = document.getElementById("download-stat");
     if (!el) return;
-    if (totalDownloads == null) {
+    if (totalDownloads == null && totalPageViews == null) {
       el.classList.add("is-hidden");
       return;
     }
-    el.textContent = fill(t("dl_total"), { n: formatCount(totalDownloads) });
+    if (totalDownloads != null && totalPageViews != null) {
+      el.textContent = fill(t("views_and_downloads"), {
+        views: formatCount(totalPageViews),
+        downloads: formatCount(totalDownloads)
+      });
+    } else if (totalPageViews != null) {
+      el.textContent = fill(t("views_total"), { n: formatCount(totalPageViews) });
+    } else {
+      el.textContent = fill(t("dl_total"), { n: formatCount(totalDownloads) });
+    }
     el.classList.remove("is-hidden");
   }
 
@@ -724,14 +738,15 @@
     );
   }
 
-  function sendGoatEvent(path, title) {
+  function sendGoatHit(path, title, isEvent) {
     var endpoint = goatCounterBaseUrl + "/count";
     var query =
       "?p=" +
       encodeURIComponent(path) +
       "&t=" +
       encodeURIComponent(title) +
-      "&e=1&rnd=" +
+      (isEvent ? "&e=1" : "") +
+      "&rnd=" +
       Math.random().toString(36).slice(2, 7);
     var url = endpoint + query;
 
@@ -758,11 +773,17 @@
       var target = event.target;
       var link = target && target.closest ? target.closest("[data-download-event]") : null;
       if (!link) return;
-      sendGoatEvent(
+      sendGoatHit(
         link.getAttribute("data-download-event"),
-        (link.textContent || "Download").trim()
+        (link.textContent || "Download").trim(),
+        true
       );
     });
+  }
+
+  function recordPageView() {
+    if (!goatCounterCode) return;
+    sendGoatHit("/", document.title, false);
   }
 
   function parsePublicCount(value) {
@@ -770,10 +791,9 @@
     return isFinite(n) && n >= 0 ? n : 0;
   }
 
-  function fetchGoatCount(key) {
-    var eventName = downloadEventName(key);
+  function fetchPublicCount(path) {
     var url =
-      goatCounterBaseUrl + "/counter/" + encodeURIComponent(eventName) + ".json";
+      goatCounterBaseUrl + "/counter/" + encodeURIComponent(path) + ".json";
 
     return fetch(url).then(function (res) {
       if (!res.ok) {
@@ -785,6 +805,10 @@
         return parsePublicCount(data && data.count);
       });
     });
+  }
+
+  function fetchGoatCount(key) {
+    return fetchPublicCount(downloadEventName(key));
   }
 
   function fetchTrackedDownloads() {
@@ -826,9 +850,21 @@
     currentAssets = buildAssets(null);
     applyAssets(currentAssets);
     applyLang();
+    recordPageView();
     document.documentElement.classList.remove("lang-pending");
 
     if (!window.fetch) return;
+
+    if (goatCounterCode) {
+      fetchPublicCount("/")
+        .then(function (total) {
+          totalPageViews = total;
+          renderDownloadStat();
+        })
+        .catch(function () {
+          /* 浏览量读取失败不影响下载 */
+        });
+    }
 
     var latestReleaseRequest = fetchLatestRelease()
       .then(function (release) {

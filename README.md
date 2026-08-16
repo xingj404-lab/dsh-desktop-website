@@ -56,6 +56,9 @@ GitHub Releases API，内嵌兜底数据则保证两个 API 都不可用时按�
 下载按钮点击，并展示 `githubBaseline` 与 GoatCounter 新增计数之和；未设置账号名时
 继续使用 GitHub Releases 下载统计。
 
+配置 GoatCounter 后，页面加载也会记录 `/` 的访问，并在下载区展示累计访问量。
+GoatCounter 开启 Sessions 时，同一访客短时间内刷新页面不会重复累计。
+
 `index.html` 内嵌的 `window.__DSH_FALLBACK__` 为兜底数据；当 API 请求失败时
 使用。若长时间依赖兜底数据，请同步更新其中的版本号与资产文件名。
 
