@@ -29,6 +29,7 @@
       meta_title: "DeepSeek Harness 桌面版 · dsh-desktop 下载",
       meta_description:
         "DeepSeek Harness (dsh) 编程智能体的原生桌面应用。开箱即用、内置 Node 与 dsh，无需安装任何环境。免费下载 macOS 与 Windows 版本。",
+      hero_screenshot_alt: "DeepSeek Harness 桌面应用中文界面",
       skip_link: "跳到主要内容",
       brand_badge: "桌面版",
       nav_features: "特性",
@@ -177,6 +178,7 @@
       meta_title: "DeepSeek Harness Desktop · dsh-desktop Download",
       meta_description:
         "The native desktop app for the DeepSeek Harness (dsh) coding agent. Zero setup — bundles Node and dsh, nothing to install. Free downloads for macOS and Windows.",
+      hero_screenshot_alt: "DeepSeek Harness desktop app in English",
       skip_link: "Skip to content",
       brand_badge: "Desktop",
       nav_features: "Features",
@@ -611,6 +613,12 @@
     document.title = t("meta_title");
     var meta = document.querySelector('meta[name="description"]');
     if (meta) meta.setAttribute("content", t("meta_description"));
+
+    var heroScreenshot = document.getElementById("hero-screenshot-image");
+    if (heroScreenshot) {
+      heroScreenshot.src = heroScreenshot.getAttribute("data-src-" + currentLang);
+      heroScreenshot.alt = t("hero_screenshot_alt");
+    }
 
     document.querySelectorAll("[data-i18n]").forEach(function (el) {
       var key = el.getAttribute("data-i18n");
