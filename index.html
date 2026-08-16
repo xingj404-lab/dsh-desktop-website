@@ -23,7 +23,7 @@
   <meta name="twitter:title" content="DeepSeek Harness 桌面版 · dsh-desktop 下载" />
   <meta name="twitter:description" content="dsh 编程智能体的原生桌面应用。开箱即用、内置 Node 与 dsh，无需安装任何环境。" />
   <meta name="twitter:image" content="https://dsh.clawloop.app/assets/og-image.png" />
-  <link rel="stylesheet" href="styles.css?v=5" />
+  <link rel="stylesheet" href="styles.css?v=6" />
   <script>
     // 尽早确定语言：在首屏渲染前判断，避免英文用户先看到中文（FOUC）。
     (function () {
@@ -99,6 +99,7 @@
 
       <nav class="site-nav" aria-label="Main navigation">
         <a href="#features" data-i18n="nav_features">特性</a>
+        <a href="#paper" data-i18n="nav_paper">论文</a>
         <a href="#stack" data-i18n="nav_stack">技术栈</a>
         <a href="#download" data-i18n="nav_download">下载</a>
         <a href="#quickstart" data-i18n="nav_quickstart">快速开始</a>
@@ -454,6 +455,33 @@
       </div>
     </section>
 
+    <!-- Paper -->
+    <section class="section paper-section" id="paper">
+      <div class="container paper-card">
+        <div class="paper-copy">
+          <p class="eyebrow" data-i18n="eyebrow_paper">研究论文</p>
+          <h2 data-i18n="paper_title">时空可组合性的编程范式</h2>
+          <p data-i18n="paper_desc">从可回退效应与响应式余效应出发，为插件系统和自演化智能体执行框架建立动态组合的形式化基础，并介绍 Cordis 的实现。</p>
+          <div class="paper-meta">
+            <span>Yifan Shi</span><span>Wei Zhang</span><span>Tianyi Cui</span>
+          </div>
+          <div class="paper-actions">
+            <a class="btn btn-primary btn-lg" data-paper-primary href="assets/papers/deepseek-harness-paper-zh.pdf" target="_blank" rel="noopener">
+              <span data-i18n="paper_read_primary">阅读中文版 PDF</span>
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+            </a>
+            <a class="btn btn-outline btn-lg" data-paper-secondary href="assets/papers/deepseek-harness-paper-en.pdf" target="_blank" rel="noopener" data-i18n="paper_read_secondary">English PDF</a>
+          </div>
+        </div>
+        <div class="paper-cover" aria-hidden="true">
+          <span class="paper-cover-kicker">DEEPSEEK · 2026</span>
+          <strong data-i18n-html="paper_cover_title">时空<br/>可组合性</strong>
+          <span class="paper-cover-rule"></span>
+          <small>Effects · Coeffects · Cordis</small>
+        </div>
+      </div>
+    </section>
+
     <!-- FAQ -->
     <section class="section faq" id="faq">
       <div class="container">
@@ -514,6 +542,6 @@
     </div>
   </footer>
 
-  <script src="app.js?v=6"></script>
+  <script src="app.js?v=7"></script>
 </body>
 </html>

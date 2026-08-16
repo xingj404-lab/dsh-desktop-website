@@ -980,6 +980,83 @@ kbd {
 
 /* ---------- FAQ ---------- */
 
+.paper-section {
+  background: #fff;
+}
+
+.paper-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 300px;
+  gap: 64px;
+  align-items: center;
+}
+
+.paper-copy h2 {
+  max-width: 720px;
+  margin: 0 0 18px;
+  font-size: clamp(30px, 4vw, 46px);
+  line-height: 1.16;
+  letter-spacing: -0.03em;
+}
+
+.paper-copy > p:not(.eyebrow) {
+  max-width: 700px;
+  margin: 0;
+  color: var(--muted);
+  font-size: 17px;
+}
+
+.paper-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 22px;
+  margin-top: 22px;
+  color: var(--ink-2);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.paper-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.paper-cover {
+  min-height: 390px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  border-radius: 8px 22px 22px 8px;
+  background: linear-gradient(145deg, #17245c, #4d6bfe 68%, #8095ff);
+  box-shadow: -9px 12px 0 #e4e9ff, var(--shadow-lg);
+}
+
+.paper-cover-kicker {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .16em;
+  opacity: .75;
+}
+
+.paper-cover strong {
+  margin: auto 0;
+  font-size: 33px;
+  line-height: 1.18;
+  letter-spacing: -.03em;
+}
+
+.paper-cover-rule {
+  width: 54px;
+  height: 3px;
+  margin-bottom: 15px;
+  background: #fff;
+}
+
+.paper-cover small { opacity: .8; }
+
 .faq {
   background: var(--bg-alt);
 }
@@ -1106,6 +1183,14 @@ kbd {
   .download-grid,
   .feature-grid {
     grid-template-columns: 1fr;
+  }
+
+  .paper-card {
+    grid-template-columns: 1fr;
+  }
+
+  .paper-cover {
+    display: none;
   }
 
   .window-body {

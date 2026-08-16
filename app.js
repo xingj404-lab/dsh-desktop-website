@@ -32,6 +32,7 @@
       skip_link: "跳到主要内容",
       brand_badge: "桌面版",
       nav_features: "特性",
+      nav_paper: "论文",
       nav_download: "下载",
       nav_faq: "常见问题",
       nav_quickstart: "快速开始",
@@ -143,6 +144,13 @@
       f6_title: "本地优先",
       f6_desc: "后端只绑定 127.0.0.1，不对外暴露端口，数据留在本机。",
 
+      eyebrow_paper: "研究论文",
+      paper_title: "时空可组合性的编程范式",
+      paper_desc: "从可回退效应与响应式余效应出发，为插件系统和自演化智能体执行框架建立动态组合的形式化基础，并介绍 Cordis 的实现。",
+      paper_read_primary: "阅读中文版 PDF",
+      paper_read_secondary: "English PDF",
+      paper_cover_title: "时空<br/>可组合性",
+
       eyebrow_faq: "常见问题",
       faq_title: "你可能想问",
       q1: "需要安装 Node.js 或 npm 吗？",
@@ -173,6 +181,7 @@
       skip_link: "Skip to content",
       brand_badge: "Desktop",
       nav_features: "Features",
+      nav_paper: "Paper",
       nav_download: "Download",
       nav_faq: "FAQ",
       nav_quickstart: "Quick start",
@@ -283,6 +292,13 @@
       f5_desc: "Watches the dsh web process and restarts it automatically on crash.",
       f6_title: "Local-first",
       f6_desc: "Backend binds to 127.0.0.1 only; nothing is exposed, data stays local.",
+
+      eyebrow_paper: "Research paper",
+      paper_title: "A Programming Paradigm for Spatiotemporal Composability",
+      paper_desc: "A formal foundation for dynamic composition in plugin systems and self-evolving agent harnesses, built from revertible effects and reactive coeffects and implemented in Cordis.",
+      paper_read_primary: "Read the English PDF",
+      paper_read_secondary: "中文 PDF",
+      paper_cover_title: "SPATIOTEMPORAL<br/>COMPOSABILITY",
 
       eyebrow_faq: "FAQ",
       faq_title: "Frequently asked",
@@ -609,6 +625,17 @@
       if (!has(key)) return;
       el.innerHTML = t(key);
     });
+
+    var primaryPaper = document.querySelector("[data-paper-primary]");
+    var secondaryPaper = document.querySelector("[data-paper-secondary]");
+    if (primaryPaper && secondaryPaper) {
+      primaryPaper.href = currentLang === "zh"
+        ? "assets/papers/deepseek-harness-paper-zh.pdf"
+        : "assets/papers/deepseek-harness-paper-en.pdf";
+      secondaryPaper.href = currentLang === "zh"
+        ? "assets/papers/deepseek-harness-paper-en.pdf"
+        : "assets/papers/deepseek-harness-paper-zh.pdf";
+    }
 
     var navToggle = document.getElementById("nav-toggle");
     if (navToggle) {
