@@ -52,7 +52,6 @@
       hero_hint_other: "请选择你的平台",
       hero_meta_platforms: "macOS 10.13+ / Windows 10+",
       hero_meta_free: "完全免费",
-      shot_chip: "DeepSeek Harness · 编程智能体",
       version_prefix: "最新版本",
 
       eyebrow_download: "下载",
@@ -201,7 +200,6 @@
       hero_hint_other: "Choose your platform",
       hero_meta_platforms: "macOS 10.13+ / Windows 10+",
       hero_meta_free: "100% free",
-      shot_chip: "DeepSeek Harness · Coding agent",
       version_prefix: "Latest",
 
       eyebrow_download: "Download",

@@ -412,110 +412,21 @@ html.lang-pending body {
   color: var(--border-strong);
 }
 
-/* 截图模拟 */
+/* 桌面应用真实截图 */
 .hero-screenshot {
   margin-top: 64px;
   width: 100%;
-  max-width: 860px;
+  max-width: 1040px;
   border-radius: var(--radius);
   overflow: hidden;
-  border: 1px solid var(--border-strong);
   box-shadow: var(--shadow-lg);
-  background: #fff;
   text-align: left;
 }
 
-.window-chrome {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 11px 16px;
-  background: #fbfcfe;
-  border-bottom: 1px solid var(--border);
-}
-
-.window-dots {
-  display: flex;
-  gap: 6px;
-}
-
-.window-dots i {
-  width: 11px;
-  height: 11px;
-  border-radius: 50%;
-  background: #ff5f57;
-}
-.window-dots i:nth-child(2) { background: #febc2e; }
-.window-dots i:nth-child(3) { background: #28c840; }
-
-.window-title {
-  font-size: 13px;
-  color: var(--muted);
-  font-weight: 500;
-}
-
-.window-spacer {
-  flex: 1;
-}
-
-.window-body {
-  display: grid;
-  grid-template-columns: 200px 1fr;
-  min-height: 300px;
-}
-
-.shot-sidebar {
-  background: var(--blue-soft-2);
-  border-right: 1px solid var(--border);
-  padding: 22px 18px;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.shot-main {
-  padding: 24px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-.shot-line {
-  height: 11px;
-  border-radius: 6px;
-  background: #e6eaf5;
-}
-.shot-sidebar .shot-line { background: #e3e8f7; }
-
-.w60 { width: 60%; }
-.w40 { width: 40%; }
-.w80 { width: 80%; }
-.w50 { width: 50%; }
-.w70 { width: 70%; }
-.w90 { width: 90%; }
-
-.shot-chip {
-  display: inline-block;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--blue-dark);
-  background: var(--blue-soft);
-  border-radius: 999px;
-  padding: 6px 14px;
-  align-self: flex-start;
-}
-
-.shot-box {
-  height: 120px;
-  border-radius: var(--radius-sm);
-  background: linear-gradient(135deg, #eef1ff 0%, #e3e9ff 100%);
-  border: 1px solid #dfe6ff;
-}
-
-.shot-row {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+.hero-screenshot img {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 /* ---------- 通用区块 ---------- */
@@ -1190,14 +1101,6 @@ kbd {
   }
 
   .paper-cover {
-    display: none;
-  }
-
-  .window-body {
-    grid-template-columns: 1fr;
-  }
-
-  .shot-sidebar {
     display: none;
   }
 
