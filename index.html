@@ -23,7 +23,7 @@
   <meta name="twitter:title" content="DeepSeek Harness 桌面版 · dsh-desktop 下载" />
   <meta name="twitter:description" content="dsh 编程智能体的原生桌面应用。开箱即用、内置 Node 与 dsh，无需安装任何环境。" />
   <meta name="twitter:image" content="https://dsh.clawloop.app/assets/og-image.png" />
-  <link rel="stylesheet" href="styles.css?v=8" />
+  <link rel="stylesheet" href="styles.css?v=9" />
   <script>
     // 尽早确定语言：在首屏渲染前判断，避免英文用户先看到中文（FOUC）。
     (function () {
@@ -527,11 +527,28 @@
           <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
           <span>@btc_great101</span>
         </a>
+        <button class="footer-wechat" id="wechat-open" type="button" aria-haspopup="dialog" aria-controls="wechat-modal">
+          <svg viewBox="0 0 24 24" width="17" height="17" fill="currentColor" aria-hidden="true"><path d="M8.45 3C4.34 3 1 5.82 1 9.3c0 2 1.1 3.78 2.82 4.93l-.7 2.58 2.92-1.48c.77.2 1.58.31 2.41.31.37 0 .74-.02 1.1-.07a5.47 5.47 0 0 1-.27-1.7c0-3.35 3.09-6.06 6.91-6.06.24 0 .47.01.7.03C16.12 5.08 12.67 3 8.45 3Zm-2.5 4.23a.88.88 0 1 1 0-1.76.88.88 0 0 1 0 1.76Zm5.02 0a.88.88 0 1 1 0-1.76.88.88 0 0 1 0 1.76Z"/><path d="M23 13.87c0-2.85-2.8-5.16-6.25-5.16S10.5 11.02 10.5 13.87s2.8 5.16 6.25 5.16c.7 0 1.38-.1 2-.27l2.46 1.24-.58-2.14C22.08 16.92 23 15.49 23 13.87Zm-8.35-1.7a.73.73 0 1 1 0-1.46.73.73 0 0 1 0 1.46Zm4.2 0a.73.73 0 1 1 0-1.46.73.73 0 0 1 0 1.46Z"/></svg>
+          <span data-i18n="footer_wechat">微信</span>
+        </button>
       </div>
       <p class="footer-copy">© <span id="year"></span> <span data-i18n="footer_copy">DeepSeek Harness Desktop · 开源 · MIT</span></p>
     </div>
   </footer>
 
-  <script src="app.js?v=8"></script>
+  <div class="wechat-modal" id="wechat-modal" role="dialog" aria-modal="true" aria-labelledby="wechat-title" hidden>
+    <button class="wechat-backdrop" type="button" data-wechat-close aria-label="关闭微信二维码" data-i18n-aria-label="wechat_close"></button>
+    <div class="wechat-dialog" role="document">
+      <button class="wechat-close" type="button" data-wechat-close aria-label="关闭" data-i18n-aria-label="wechat_close">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+      <p class="wechat-kicker">WECHAT</p>
+      <h2 id="wechat-title" data-i18n="wechat_title">添加微信</h2>
+      <p class="wechat-hint" data-i18n="wechat_hint">打开微信扫一扫，添加「金星」为好友</p>
+      <img src="assets/wechat-qr.jpg" alt="添加金星微信的二维码" data-i18n-alt="wechat_qr_alt" width="828" height="1237" />
+    </div>
+  </div>
+
+  <script src="app.js?v=9"></script>
 </body>
 </html>

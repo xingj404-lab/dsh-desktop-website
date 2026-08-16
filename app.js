@@ -170,6 +170,11 @@
         'dsh 编程智能体的原生桌面应用，基于 Tauri v2 构建。底层界面由 <a href="https://github.com/deepseek-ai/deepseek-harness" target="_blank" rel="noopener">DeepSeek Harness</a> 提供。',
       footer_repo: "GitHub 仓库",
       footer_docs: "文档",
+      footer_wechat: "微信",
+      wechat_title: "添加微信",
+      wechat_hint: "打开微信扫一扫，添加「金星」为好友",
+      wechat_qr_alt: "添加金星微信的二维码",
+      wechat_close: "关闭微信二维码",
       footer_copy: "DeepSeek Harness Desktop · 开源 · MIT"
     },
 
@@ -318,6 +323,11 @@
         'Native desktop app for the dsh coding agent, built with Tauri v2. Powered by <a href="https://github.com/deepseek-ai/deepseek-harness" target="_blank" rel="noopener">DeepSeek Harness</a>.',
       footer_repo: "GitHub repo",
       footer_docs: "Docs",
+      footer_wechat: "WeChat",
+      wechat_title: "Add me on WeChat",
+      wechat_hint: "Scan with WeChat to add Jin Xing",
+      wechat_qr_alt: "WeChat QR code for Jin Xing",
+      wechat_close: "Close WeChat QR code",
       footer_copy: "DeepSeek Harness Desktop · Open source · MIT"
     }
   };
@@ -652,6 +662,16 @@
       el.innerHTML = t(key);
     });
 
+    document.querySelectorAll("[data-i18n-alt]").forEach(function (el) {
+      var key = el.getAttribute("data-i18n-alt");
+      if (has(key)) el.setAttribute("alt", t(key));
+    });
+
+    document.querySelectorAll("[data-i18n-aria-label]").forEach(function (el) {
+      var key = el.getAttribute("data-i18n-aria-label");
+      if (has(key)) el.setAttribute("aria-label", t(key));
+    });
+
     var primaryPaper = document.querySelector("[data-paper-primary]");
     var secondaryPaper = document.querySelector("[data-paper-secondary]");
     if (primaryPaper && secondaryPaper) {
@@ -706,6 +726,39 @@
         toggle.setAttribute("aria-expanded", "false");
         toggle.setAttribute("aria-label", t("nav_open"));
       }
+    });
+  }
+
+  function initWechatModal() {
+    var modal = document.getElementById("wechat-modal");
+    var openButton = document.getElementById("wechat-open");
+    if (!modal || !openButton) return;
+
+    var closeButtons = modal.querySelectorAll("[data-wechat-close]");
+    var closeButton = modal.querySelector(".wechat-close");
+
+    function openModal() {
+      modal.hidden = false;
+      document.body.classList.add("modal-open");
+      openButton.setAttribute("aria-expanded", "true");
+      if (closeButton) closeButton.focus();
+    }
+
+    function closeModal() {
+      if (modal.hidden) return;
+      modal.hidden = true;
+      document.body.classList.remove("modal-open");
+      openButton.setAttribute("aria-expanded", "false");
+      openButton.focus();
+    }
+
+    openButton.setAttribute("aria-expanded", "false");
+    openButton.addEventListener("click", openModal);
+    closeButtons.forEach(function (button) {
+      button.addEventListener("click", closeModal);
+    });
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && !modal.hidden) closeModal();
     });
   }
 
@@ -905,6 +958,7 @@
     if (year) year.textContent = String(new Date().getFullYear());
 
     initMobileNav();
+    initWechatModal();
     initCopyButtons();
     initDownloadTracking();
 

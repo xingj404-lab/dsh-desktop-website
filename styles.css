@@ -1098,6 +1098,124 @@ kbd {
   gap: 6px;
 }
 
+.footer-wechat {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0;
+  color: #c3cbe0;
+  background: none;
+  border: 0;
+  font: inherit;
+  font-size: 14.5px;
+  cursor: pointer;
+}
+
+.footer-wechat:hover,
+.footer-wechat:focus-visible {
+  color: #fff;
+}
+
+.footer-wechat:focus-visible,
+.wechat-close:focus-visible {
+  outline: 2px solid #91a3ff;
+  outline-offset: 3px;
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+.wechat-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.wechat-modal[hidden] {
+  display: none;
+}
+
+.wechat-backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  border: 0;
+  background: rgba(7, 12, 24, 0.72);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  cursor: default;
+}
+
+.wechat-dialog {
+  position: relative;
+  width: min(100%, 390px);
+  max-height: calc(100vh - 48px);
+  overflow: auto;
+  padding: 28px 28px 24px;
+  color: var(--ink);
+  text-align: center;
+  background: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 22px;
+  box-shadow: 0 32px 90px rgba(5, 12, 32, 0.42);
+  animation: modal-in 0.2s ease-out;
+}
+
+.wechat-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  color: var(--muted);
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.wechat-kicker {
+  margin: 2px 0 7px;
+  color: #20a95a;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+}
+
+.wechat-dialog h2 {
+  margin: 0;
+  font-size: 25px;
+  line-height: 1.25;
+}
+
+.wechat-hint {
+  margin: 8px 0 18px;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.wechat-dialog img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+}
+
+@keyframes modal-in {
+  from { opacity: 0; transform: translateY(8px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
 .footer-copy {
   margin: 8px 0 0;
   font-size: 13px;
