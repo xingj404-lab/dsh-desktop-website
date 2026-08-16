@@ -468,11 +468,21 @@ html.lang-pending body {
   margin: 0;
 }
 
+.download-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.download-version,
 .download-stat {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  margin-top: 20px;
+  margin: 0;
   padding: 8px 16px;
   font-size: 14px;
   font-weight: 600;
@@ -481,6 +491,12 @@ html.lang-pending body {
   border: 1px solid #dfe6ff;
   border-radius: 999px;
   box-shadow: var(--shadow-sm);
+}
+
+.download-version {
+  color: #475569;
+  background: #f8fafc;
+  border-color: #e2e8f0;
 }
 
 .download-stat.is-hidden {

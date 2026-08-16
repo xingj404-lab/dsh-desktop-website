@@ -560,10 +560,12 @@
   /* ============================ 渲染 ============================ */
 
   function updateVersionText() {
-    var el = document.getElementById("version-text");
-    if (!el) return;
     var v = latestVersion ? "v" + latestVersion : "";
-    el.textContent = v ? t("version_prefix") + " " + v : t("version_prefix");
+    var text = v ? t("version_prefix") + " " + v : t("version_prefix");
+    ["version-text", "download-version-text"].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) el.textContent = text;
+    });
   }
 
   function updateHero() {
