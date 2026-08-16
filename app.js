@@ -562,13 +562,23 @@
       el.classList.add("is-hidden");
       return;
     }
+    var historicalDownloads = Object.keys(ASSET_SUFFIX).reduce(function (sum, key) {
+      return sum + parsePublicCount(githubBaseline[key]);
+    }, 0);
+    var displayedPageViews =
+      totalPageViews == null
+        ? null
+        : Math.max(
+            historicalDownloads + totalPageViews,
+            totalDownloads == null ? historicalDownloads : totalDownloads
+          );
     if (totalDownloads != null && totalPageViews != null) {
       el.textContent = fill(t("views_and_downloads"), {
-        views: formatCount(totalPageViews),
+        views: formatCount(displayedPageViews),
         downloads: formatCount(totalDownloads)
       });
     } else if (totalPageViews != null) {
-      el.textContent = fill(t("views_total"), { n: formatCount(totalPageViews) });
+      el.textContent = fill(t("views_total"), { n: formatCount(displayedPageViews) });
     } else {
       el.textContent = fill(t("dl_total"), { n: formatCount(totalDownloads) });
     }
@@ -792,10 +802,16 @@
   }
 
   function fetchPublicCount(path) {
+    // GoatCounter 的公开计数默认可缓存数小时；用五分钟时间桶兼顾新鲜度与请求量。
+    var cacheBucket = Math.floor(Date.now() / (5 * 60 * 1000));
     var url =
-      goatCounterBaseUrl + "/counter/" + encodeURIComponent(path) + ".json";
+      goatCounterBaseUrl +
+      "/counter/" +
+      encodeURIComponent(path) +
+      ".json?cache=" +
+      cacheBucket;
 
-    return fetch(url).then(function (res) {
+    return fetch(url, { cache: "no-store" }).then(function (res) {
       if (!res.ok) {
         // 尚未产生过该事件时 GoatCounter 返回 404，按 0 次处理。
         if (res.status === 404) return 0;
