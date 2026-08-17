@@ -168,6 +168,8 @@
       footer_brand: "DeepSeek Harness 桌面版",
       footer_desc:
         'dsh 编程智能体的原生桌面应用，基于 Tauri v2 构建。底层界面由 <a href="https://github.com/deepseek-ai/deepseek-harness" target="_blank" rel="noopener">DeepSeek Harness</a> 提供。',
+      footer_resources: "资源",
+      footer_contact: "联系",
       footer_repo: "GitHub 仓库",
       footer_docs: "文档",
       footer_wechat: "微信",
@@ -321,6 +323,8 @@
       footer_brand: "DeepSeek Harness Desktop",
       footer_desc:
         'Native desktop app for the dsh coding agent, built with Tauri v2. Powered by <a href="https://github.com/deepseek-ai/deepseek-harness" target="_blank" rel="noopener">DeepSeek Harness</a>.',
+      footer_resources: "Resources",
+      footer_contact: "Contact",
       footer_repo: "GitHub repo",
       footer_docs: "Docs",
       footer_wechat: "WeChat",
@@ -729,36 +733,59 @@
     });
   }
 
-  function initWechatModal() {
-    var modal = document.getElementById("wechat-modal");
+  function initWechatPopover() {
+    var wrapper = document.getElementById("wechat-wrap");
+    var popover = document.getElementById("wechat-popover");
     var openButton = document.getElementById("wechat-open");
-    if (!modal || !openButton) return;
+    if (!wrapper || !popover || !openButton) return;
 
-    var closeButtons = modal.querySelectorAll("[data-wechat-close]");
-    var closeButton = modal.querySelector(".wechat-close");
+    var closeButton = popover.querySelector("[data-wechat-close]");
+    var pinned = false;
 
-    function openModal() {
-      modal.hidden = false;
-      document.body.classList.add("modal-open");
+    function openPopover(shouldPin) {
+      popover.hidden = false;
+      if (shouldPin) pinned = true;
       openButton.setAttribute("aria-expanded", "true");
-      if (closeButton) closeButton.focus();
     }
 
-    function closeModal() {
-      if (modal.hidden) return;
-      modal.hidden = true;
-      document.body.classList.remove("modal-open");
+    function closePopover(restoreFocus) {
+      if (popover.hidden) return;
+      popover.hidden = true;
+      pinned = false;
       openButton.setAttribute("aria-expanded", "false");
-      openButton.focus();
+      if (restoreFocus) openButton.focus();
     }
 
     openButton.setAttribute("aria-expanded", "false");
-    openButton.addEventListener("click", openModal);
-    closeButtons.forEach(function (button) {
-      button.addEventListener("click", closeModal);
+    wrapper.addEventListener("mouseenter", function () {
+      openPopover(false);
+    });
+    wrapper.addEventListener("mouseleave", function () {
+      if (!pinned) closePopover(false);
+    });
+    wrapper.addEventListener("focusin", function () {
+      openPopover(false);
+    });
+    wrapper.addEventListener("focusout", function () {
+      setTimeout(function () {
+        if (!pinned && !wrapper.contains(document.activeElement)) closePopover(false);
+      }, 0);
+    });
+    openButton.addEventListener("click", function (event) {
+      event.stopPropagation();
+      if (!popover.hidden && pinned) closePopover(false);
+      else openPopover(true);
+    });
+    if (closeButton) {
+      closeButton.addEventListener("click", function () {
+        closePopover(true);
+      });
+    }
+    document.addEventListener("click", function (event) {
+      if (!wrapper.contains(event.target)) closePopover(false);
     });
     document.addEventListener("keydown", function (event) {
-      if (event.key === "Escape" && !modal.hidden) closeModal();
+      if (event.key === "Escape" && !popover.hidden) closePopover(true);
     });
   }
 
@@ -958,7 +985,7 @@
     if (year) year.textContent = String(new Date().getFullYear());
 
     initMobileNav();
-    initWechatModal();
+    initWechatPopover();
     initCopyButtons();
     initDownloadTracking();
 
